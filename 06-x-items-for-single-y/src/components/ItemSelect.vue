@@ -1,12 +1,14 @@
 <script setup>
-import { ref } from 'vue'
-import { useItemComparison } from '../composables/itemComparison'
+defineProps({
+  options: Array,
+  modelValue: String,
+})
 
-const selected = ref()
+const emit = defineEmits(['update:modelValue'])
 </script>
 
 <template>
-  <select v-model="selected" class="p-2 border-2 border-gray-dark">
-    <option disabled value="">Select an item</option>
+  <select :value="modelValue" @change="v => $emit('update:modelValue', v.target.value)" class="p-2 border-2 border-gray-dark">
+    <option v-for="option in options" :value="option.id">{{ option.title }} - ${{ option.price }}</option>
   </select>
 </template>
