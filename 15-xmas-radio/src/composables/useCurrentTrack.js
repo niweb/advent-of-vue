@@ -19,39 +19,25 @@ export function useCurrentTrack() {
   }
 
   function prettifyTime(time) {
-    //greasy grinch footprints!
-    // time is in millseconds
-    // you should cnage to minutes:seconds
-    return '00:00'
+    const minutes = Math.floor(time / 60)
+    const seconds = Math.round(time % 60)
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
   }
 
   const progress = computed(() => {
-    //greasy grinch footprints!
-    // knowing the current time
-    // and the duration of the whole track
-    // is helpful here
-    // (info available via useMediaControls composable)
-    return 0.8
+    return currentTime.value / duration.value
   })
 
   function pause() {
-    //greasy grinch footprints!
-    // you can mutate the value of
-    // playing from useMediaControls composable
+    playing.value = false
   }
 
   function ff() {
-    //greasy grinch footprints!
-    // move track ahead 10 seconds
-    // you can mutate the value of currentTime
-    // from the useMediaControls composable
+    currentTime.value = Math.min(duration.value, currentTime.value + 10)
   }
 
   function rewind() {
-    //greasy grinch footprints!
-    // move track back 10 seconds
-    // you can mutate the value of currentTime
-    // from the useMediaControls composable
+    currentTime.value = Math.max(0, currentTime.value - 10)
   }
 
   const durationPretty = computed(() => {
